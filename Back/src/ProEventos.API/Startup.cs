@@ -33,6 +33,8 @@ namespace ProEventos.API
                 context => context.UseSqlite(Configuration.GetConnectionString("Default"))
             );
             services.AddControllers();
+            //Adicionado para o Cors para o front conseguir acessar o banco
+            services.AddCors();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ProEventos.API", Version = "v1" });
@@ -54,6 +56,12 @@ namespace ProEventos.API
             app.UseRouting();
 
             app.UseAuthorization();
+
+            //add para front acessar a base
+            app.UseCors(x => x.AllowAnyHeader()
+                              .AllowAnyMethod()
+                              .AllowAnyOrigin()
+            );
 
             app.UseEndpoints(endpoints =>
             {
