@@ -7,13 +7,18 @@
   <hr>
 </div> -->
 
-<form action="" class="form-inline">
+<div class="form-inline">
   <div class="form-group mb-2">
-    <input type="text" class="form-control mr-2" placeholder="buscar">
-    <button class="btn btn-outline-success">Buscar</button>
-  </div>
-</form>
+    <label class="mr-2">Filtro</label>
+    <input type="text"
+    class="form-control mr-2"
+     placeholder="buscar"
+     [(ngModel)]="filtroLista"
+     >
 
+  </div>
+</div>
+<!-- <h3>Filtro:{{filtroLista}}</h3> -->
 <table class="table table-striped">
   <thead class="thead-dark">
     <tr>
@@ -29,15 +34,23 @@
   </thead>
   <!-- *ngIf="eventos && eventos.length" exibe os eventos se houver evento na base -->
   <tbody *ngIf="eventos && eventos.length" >
-    <tr *ngFor="let evento of eventos">
+    <tr *ngFor="let evento of eventosfiltrados">
       <td>{{evento.eventoId}}</td>
-      <td>{{evento.imagemURL}}</td>
+      <td>
+        <img src="/assets/{{evento.imagemURL}}"
+        [style.width.px]="100"
+
+        >
+      </td>
       <td>{{evento.tema}}</td>
       <td>{{evento.local}}</td>
       <td>{{evento.dataEvento}}</td>
       <td>{{evento.qtdPessoas}}</td>
       <td>{{evento.lote}}</td>
-      <td></td>
+      <td>
+        <button type="button" class="btn btn-primary btn-sm mr-2">editar</button>
+        <button type="button" class="btn btn-danger btn-sm mr-2">excluir</button>
+      </td>
     </tr>
   </tbody>
   <tfoot *ngIf="!eventos.length">
