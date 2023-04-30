@@ -12,7 +12,15 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using ProEventos.API.Data;
+using ProEventos.Persistence;
+using ProEventos.Domain;
+using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
+
+
+
+
+using ProEventos.Application.Contratos;
+using ProEventos.Application;
 
 namespace ProEventos.API
 {
@@ -29,10 +37,18 @@ namespace ProEventos.API
         public void ConfigureServices(IServiceCollection services)
         {
             //Adicionar o contexto
-            services.AddDbContext<DataContext>(
+            services.AddDbContext<ProEventosContext>(
                 context => context.UseSqlite(Configuration.GetConnectionString("Default"))
             );
-            services.AddControllers();
+            services.AddControllers()
+                    .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling =
+                    Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+                    
+                   
+
+            services.AddScoped<IEventoService, EventoService>();
+            services.AddScoped<IGeralPersistence, GeralPersistence>();
+            services.AddScoped<IEventoPersistence, EventosPersistence>();
             //Adicionado para o Cors para o front conseguir acessar o banco
             services.AddCors();
             services.AddSwaggerGen(c =>
