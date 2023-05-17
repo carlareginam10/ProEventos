@@ -10,6 +10,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavComponent } from './nav/nav.component';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { FormsModule } from '@angular/forms';
+import { EventoService } from './services/evento.service';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,10 @@ import { FormsModule } from '@angular/forms';
     CollapseModule.forRoot(),
     FormsModule
   ],
-  providers: [],
+  providers: [
+    EventoService
+  ],
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }
